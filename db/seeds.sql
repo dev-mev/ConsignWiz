@@ -1,0 +1,2 @@
+-- INSERT INTO users (username, first_name, last_name, street_address1, city, _state, zip, email_address, phone1) 
+-- VALUES ('jaxdot', 'jacqueline', 'gaherity', '15771 oxford way', 'sandwich', 'ma', '98012', 'jacquelne.gaherity@UW.edu', '508-888-9755');
