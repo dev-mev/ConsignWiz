@@ -1,4 +1,5 @@
--- NOTES: I commented out Fk's for now as I would have to create the databases individually before correlating items. 
+-- NOTES: I commented out Fk's for now as I would have to create the databases
+-- individually before correlating items. 
 
 DROP DATABASE IF EXISTS `project_db`;
 CREATE DATABASE project_db;
