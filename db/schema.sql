@@ -41,7 +41,7 @@ CREATE TABLE memberships
     related_user_id int NOT NULL, 
     related_account_id int, 
     -- FOREIGN KEY (related_user_id) REFERENCES logins(related_user_id), -- requires review
-    -- FOREIGN KEY (related_account_id) REFERENCES somewhere(somewhere) --where is this FK going?
+    -- FOREIGN KEY (related_account_id) REFERENCES accounts(related_account_id) --where is this FK going?
 	PRIMARY KEY (id)
 );
 
