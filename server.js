@@ -14,10 +14,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Passport
+app.use(passport.initialize());
+
 passport.use(new LocalStrategy(
   function(username, password, done){
     // TODO: check auth against database
-    if(username === "jdoe" && password === "open-sesame") {
+    if(username === "jdoe@example.com" && password === "open-sesame") {
       return done(null, username);
     }
     return done(null, false);
@@ -30,6 +32,18 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
   done(null, user);
+});
+
+app.post("/login", 
+  passport.authenticate("local", { failureRedirect: "/login.html" }),
+  function(req, res) {
+    res.redirect("/");
+  });
+
+// Logout route
+app.get("/logout", (req, res) => {
+  req.logout(); 
+  res.redirect("/");
 });
 
 // Handlebars
