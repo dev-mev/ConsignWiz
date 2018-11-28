@@ -1,8 +1,9 @@
-require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
 
 var db = require("./models");
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -11,6 +12,25 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
+
+// Passport
+passport.use(new LocalStrategy(
+  function(username, password, done){
+    // TODO: check auth against database
+    if(username === "jdoe" && password === "open-sesame") {
+      return done(null, username);
+    }
+    return done(null, false);
+  }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 // Handlebars
 app.engine(
