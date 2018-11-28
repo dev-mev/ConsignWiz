@@ -1,5 +1,6 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
+var session = require("express-session");
 
 var db = require("./models");
 var passport = require("passport");
@@ -9,12 +10,14 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(session({ secret: "consign" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 
 // Passport
 app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new LocalStrategy(
   function(username, password, done){
@@ -40,10 +43,26 @@ app.post("/login",
     res.redirect("/");
   });
 
+function isUserAuthenticated(req, res, next) {
+  if (req.user) {
+    console.log("auth succeeded")
+    next();
+  } else {
+    console.log("login please")
+    res.send('You must login!');
+  }
+}
+
+// TODO: for testing purposes
+app.get("/secret", isUserAuthenticated, (req, res) => {
+  res.send("Page to test authentication.");
+  console.log("secret route accessed by " + req.user);
+});
+
 // Logout route
 app.get("/logout", (req, res) => {
   req.logout(); 
-  res.redirect("/");
+  res.redirect("/login.html");
 });
 
 // Handlebars
