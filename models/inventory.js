@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
       notNull: true
       },
     consignor_user_id: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
       notNull: true
       }, 
     }, 
