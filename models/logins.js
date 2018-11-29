@@ -1,7 +1,10 @@
-module.exports = function(sequelize, DataTypes) {
+// users
+module.exports = function (sequelize, DataTypes) {
   var logins = sequelize.define("logins", {
     passwordHash: DataTypes.STRING,
     passwordSalt: DataTypes.STRING
+  }, {
+    timestamps: false
   });
   return logins;
 };

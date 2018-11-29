@@ -1,28 +1,59 @@
 module.exports = function(sequelize, DataTypes) {
   var users = sequelize.define("users", {
-    username: DataTypes.STRING,
-    validation: { notNull: true, },
-    first_name: DataTypes.STRING,
-    validation: { notNull: true, },
-    last_name: DataTypes.STRING,
-    validation: { notNull: true, },
-    street_address1: DataTypes.STRING,
-    validation: { notNull: true, },
+    username: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    first_name: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    last_name: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    street_address1: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
     street_address2: DataTypes.STRING,
-    validation: { notNull: true, },
-    city: DataTypes.STRING,
-    validation: { notNull: true, },
-    _state: DataTypes.STRING,
-    validation: { notNull: true, },
-    ZIP: DataTypes.STRING,
-    validation: { notNull: true, },
-    email_address: DataTypes.STRING,
-    validation: {isEmail: true, 
-    notNull: true },
-    phone1: DataTypes.STRING,
-    validation: { notNull: true, },
+    city: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    _state: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    ZIP: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
+    email_address: {
+        type: DataTypes.STRING,
+        notNull: true,
+        isEmail: true,
+      },
+    phone1: {
+        type: DataTypes.STRING,
+        notNull: true
+      },
     phone2: DataTypes.STRING
+    }, {
+        timestamps: false
+    }
+);
+
+    users.associate = function(models) {
+    // We're saying that a Post should belong to an Author
+    // A Post can't be created without an Author due to the foreign key constraint
+    users.hasOne(models.logins, {
+      foreignKey: {
+        allowNull: false
+      }
     });
+  };
+
     return users;
   };
 

@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "dev_consignwizdb",
+    "database": "project2_db",
     "host": "localhost",
     "dialect": "mysql"
   },
