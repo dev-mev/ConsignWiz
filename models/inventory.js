@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
     freezeTableName: true,
   });
   // ERE20181129 - I removed consignor_user_id above
-  
+
   inventory.associate = function (models) {
     // create a one to many relationship:  1 purchase order to many Inventory
     // ERE20181129 - change from hasOne to BelongsTo.  The FK will now be on inventory
@@ -51,10 +51,12 @@ module.exports = function (sequelize, DataTypes) {
   // ERE20181129 - I added this relationship. The FK will be on inventory
   inventory.associate = function (models) {
     // We're saying that a inventory should belong to a purchase order
-    // An inventory record can be created without an user 
+    // An inventory record can not be created without an user 
+    // ERE20181130 - I changed this to allNull: false
     inventory.belongsTo(models.users, {
+      onDelete: 'cascade',
       foreignKey: {
-        allowNull: true
+        allowNull: false
       }
     });
   };

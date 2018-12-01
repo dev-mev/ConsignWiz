@@ -38,7 +38,12 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       notNull: true
     },
-    phone2: DataTypes.STRING
+    phone2: DataTypes.STRING,
+    passwordHashSalt: DataTypes.STRING,
+    userType: {
+      type: DataTypes.STRING,
+      notNull: true
+    }
   }, {
     timestamps: false
   });
@@ -46,11 +51,11 @@ module.exports = function (sequelize, DataTypes) {
   users.associate = function (models) {
     // We're saying that a login should belong to an user
     // A login can't be created without an user due to the foreign key constraint
-    users.hasOne(models.logins, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+    // users.hasOne(models.logins, {
+    //   foreignKey: {
+    //     allowNull: false
+    //   }
+    // });
     users.hasMany(models.inventory, {
       foreignKey: {
         allowNull: false
@@ -58,16 +63,7 @@ module.exports = function (sequelize, DataTypes) {
     });
   };
   
-  // users.associate = function (models) {
-  //   // We're saying that a Post should belong to an Author
-  //   // A Post can't be created without an Author due to the foreign key constraint
-  //   users.hasMany(models.inventory, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
-
+  
   return users;
 };
 
