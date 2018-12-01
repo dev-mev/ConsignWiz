@@ -3,12 +3,15 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
+    // db.Example.findAll({}).then(function(dbExamples) {
+    //   res.render("index", {
+    //     msg: "Welcome!",
+    //     examples: dbExamples
+    //   });
+    // });
+    //console.log(req.user);
+    //res.send('GET request to the homepage')
+    res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
   // Load example page and pass in an example by id
@@ -18,6 +21,8 @@ module.exports = function(app) {
         example: data
       });
     });
+    console.log(req);
+    //res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
   // Render 404 page for any unmatched routes
