@@ -1,63 +1,73 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var users = sequelize.define("users", {
     username: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     first_name: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     last_name: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     street_address1: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     street_address2: DataTypes.STRING,
     city: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     _state: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     ZIP: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     email_address: {
-        type: DataTypes.STRING,
-        notNull: true,
-        isEmail: true,
-      },
+      type: DataTypes.STRING,
+      notNull: true,
+      isEmail: true,
+    },
     phone1: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
-    phone2: DataTypes.STRING
-    }, {
-        timestamps: false
+      type: DataTypes.STRING,
+      notNull: true
+    },
+    phone2: DataTypes.STRING,
+    passwordHashSalt: DataTypes.STRING,
+    userType: {
+      type: DataTypes.STRING,
+      notNull: true
     }
-);
+  }, {
+    timestamps: false
+  });
 
-    users.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-    users.hasOne(models.logins, {
+  users.associate = function (models) {
+    // We're saying that a login should belong to an user
+    // A login can't be created without an user due to the foreign key constraint
+    // users.hasOne(models.logins, {
+    //   foreignKey: {
+    //     allowNull: false
+    //   }
+    // });
+    users.hasMany(models.inventory, {
       foreignKey: {
         allowNull: false
       }
     });
   };
+  
+  
+  return users;
+};
 
-    return users;
-  };
-
-  /* 
+/* 
   -- users
 CREATE TABLE users
 (

@@ -1,9 +1,9 @@
 -- NOTES: I commented out Fk's for now as I would have to create the databases
 -- individually before correlating items. 
 
-DROP DATABASE IF EXISTS `project_db`;
-CREATE DATABASE project_db;
-USE project_db;
+DROP DATABASE IF EXISTS `project2_db`;
+CREATE DATABASE project2_db;
+USE project2_db;
 
 -- logins
 CREATE TABLE logins
