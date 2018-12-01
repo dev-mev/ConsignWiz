@@ -43,13 +43,95 @@
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('reports')}" class="btn btn-info btn-block btn-lg employee">View Reports</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('consignment-status')}" class="btn btn-dark btn-block btn-lg consignor">View Consignment Status</button>
         </div>
-        <div class="col-md-6">
-          <div class="rightSide sale" style="display:none" data-bind="visible: ModalStatus() == 'sale'">Make a sale here!</div>
-          <div class="rightSide addConsignor" style="display:none" data-bind="visible: ModalStatus() == 'add-consignor'">Add a consigner here!</div>
-          <div class="rightSide inventoryLookup" style="display:none" data-bind="visible: ModalStatus() == 'inventory-lookup'">Look up inventory here!</div>
-          <div class="rightSide consignorLookup" style="display:none" data-bind="visible: ModalStatus() == 'consignor-lookup'">Consignor look up here!</div>
-          <div class="rightSide reports" style="display:none" data-bind="visible: ModalStatus() == 'reports'">View report here!</div>
-          <div class="rightSide consignmentStatus" style="display:none" data-bind="visible: ModalStatus() == 'consignment-status'">View consignment status here!</div> 
+        <div class="col-md-8">
+          <div class="rightSide sale" style="display:none" data-bind="visible: ModalStatus() == 'sale'">
+              <h3>Make a sale</h3>
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Item Name</label>
+                <input class="form-control" type="text" placeholder="eg: David Bowie shirt">              
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Item description</label>
+                <input class="form-control" type="text" placeholder="eg: Black short sleeve shirt with David Bowie on it.">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Item description</label>
+                <input class="form-control" type="text" placeholder="eg: Black short sleeve shirt with David Bowie on it.">
+              </div>
+              <label for="exampleInputPassword1">Requested sales price</label>
+              <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+                <input type="text" class="form-control" placeholder="eg: 5.00" aria-label="Amount (to the nearest dollar)">
+              </div>
+              <!--This form should also generate a date upon selecting "submit" -->
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="rightSide addConsignor" style="display:none" data-bind="visible: ModalStatus() == 'add-consignor'">
+            <h3>Add a consignor</h3>
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Consignor name</label>
+                <input class="form-control" type="text" placeholder="eg: David Bowie shirt">              
+              </div>
+            </form>
+          </div>
+          <div class="rightSide inventoryLookup" style="display:none" data-bind="visible: ModalStatus() == 'inventory-lookup'">
+            <h3>Look up inventory</h3>
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Search inventory: </label>
+                <input class="form-control" type="text" placeholder="eg: David Bowie Shirt">     
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+          </div>
+          <div class="rightSide consignorLookup" style="display:none" data-bind="visible: ModalStatus() == 'consignor-lookup'">     
+              <h3>Consignor lookup</h3>
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Search consignor: </label>
+                  <input class="form-control" type="text" placeholder="eg: Molly">     
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+              </form>
+          </div>
+          <div class="rightSide reports" style="display:none" data-bind="visible: ModalStatus() == 'reports'">
+              <h3>View reports</h3>
+              <p>What would you like a report on? </p>
+              <p>Example reports: sales within this time period, sales by this consignor, sales by this category of clothing?</p>
+              <form>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Item description</label>
+                    <input class="form-control" type="text" placeholder="eg: Shirt, Pants, Shoes">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Consignor name</label>
+                    <input class="form-control" type="text" placeholder="eg: Jackie">
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Sold on this date (mm/dd/yyyy)</label>
+                      <input class="form-control" type="text" placeholder="eg: 01/01/2018">
+                    </div>
+                  <!--This form should also generate a date upon selecting "submit" -->
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+          
+          </div>
+          <div class="rightSide consignmentStatus" style="display:none" data-bind="visible: ModalStatus() == 'consignment-status'">
+            <h3>View consignment status</h3>
+            <form>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Consignor name</label>
+                <input class="form-control" type="text" placeholder="eg: Ed">
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+          </div> 
       
         </div>
       </div>

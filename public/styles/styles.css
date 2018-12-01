@@ -19,9 +19,18 @@
 }
 
 .reports {
-  border: 3px solid ##17a2b8;
+  border: 3px solid #17a2b8;
 }
 
 .consignmentStatus{
   border: 3px solid #343a40;
+}
+
+.rightSide{
+  height:100%;
+  padding:10px;
+}
+
+.row{
+  margin-top:50px;
 }
