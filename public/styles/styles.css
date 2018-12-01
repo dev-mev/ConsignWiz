@@ -1,3 +1,36 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+.sale{
+  border: 3px solid #007bff;
+}
+
+.addConsignor{
+  border: 3px solid #6c757d;
+}
+
+.inventoryLookup {
+  border: 3px solid #28a745;
+}
+
+.consignorLookup{
+  border: 3px solid #dc3545;
+}
+
+.reports {
+  border: 3px solid #17a2b8;
+}
+
+.consignmentStatus{
+  border: 3px solid #343a40;
+}
+
+.rightSide{
+  height:100%;
+  padding:10px;
+}
+
+.row{
+  margin-top:50px;
+}
