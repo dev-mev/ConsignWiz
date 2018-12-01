@@ -1,26 +1,35 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all Users
-  app.get("/api/users", function(req, res) {
-    db.users.findAll({}).then(function(dbUsers) {
-      res.json(dbUsers);
+  // Get all inventory with Users
+  app.get("/api/inventory_users", function(req, res) {
+    db.inventory.findAll({ include: [db.users] }).then(function(dbInvPlusUser) {
+      res.json(dbInvPlusUser);
     });
   });
 
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
+  // get all inventory for one consignor
+  app.get("/api/inventory/:userId", function(req, res) {
+    db.inventory
+      .findAll({ where: { id: req.params.userId } })
+      .then(function(dbInventory) {
+        res.json(dbInventory);
+      });
   });
+
+  // // Get all examples
+  // app.get("/api/examples", function(req, res) {
+  //   db.Example.findAll({}).then(function(dbExamples) {
+  //     res.json(dbExamples);
+  //   });
+  // });
 
   // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // app.post("/api/examples", function(req, res) {
+  //   db.Example.create(req.body).then(function(dbExample) {
+  //     res.json(dbExample);
+  //   });
+  // });
 
   // Delete an example by id
   // app.delete("/api/examples/:id", function(req, res) {

@@ -1,56 +1,66 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var inventory = sequelize.define("inventory", {
     product_name: {
-        type: DataTypes.STRING,
-        notNull: true
-      },
+      type: DataTypes.STRING,
+      notNull: true
+    },
     description: {
-        type: DataTypes.TEXT,
-        notNull: true
-      },
+      type: DataTypes.TEXT,
+      notNull: true
+    },
     received_date: {
       type: DataTypes.DATE,
       notNull: true
-      },
+    },
     requested_sale_price: {
-      type: DataTypes.DECIMAL(5,2),
+      type: DataTypes.DECIMAL(5, 2),
       notNull: true
-      },
+    },
     sold_at_price: {
       type: DataTypes.DECIMAL(5, 2)
       //not NOT NULL
-      },
+    },
     sold_date: {
       type: DataTypes.DATE
-      },
+    },
     commision_rate: {
       type: DataTypes.FLOAT,
       notNull: true
-      },
+    },
     consignor_paid_checkbox: {
       type: DataTypes.BOOLEAN,
       notNull: true
-      },
-    consignor_user_id: {
-      type: DataTypes.INTEGER,
-      notNull: true
-      }, 
-    }, 
-    {
-      timestamps: false
     }
-);
+  }, {
+    timestamps: false,
+    // ERE20181129 - I added freeze table name
+    freezeTableName: true,
+  });
+  // ERE20181129 - I removed consignor_user_id above
 
-    inventory.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-    inventory.hasOne(models.purchase_orders, {
+  inventory.associate = function (models) {
+    // create a one to many relationship:  1 purchase order to many Inventory
+    // ERE20181129 - change from hasOne to BelongsTo.  The FK will now be on inventory
+    inventory.belongsTo(models.purchase_orders, {
+      foreignKey: {
+        allowNull: true
+      }
+    });
+  };
+
+  // ERE20181129 - I added this relationship. The FK will be on inventory
+  inventory.associate = function (models) {
+    // We're saying that a inventory should belong to a purchase order
+    // An inventory record can not be created without an user 
+    // ERE20181130 - I changed this to allNull: false
+    inventory.belongsTo(models.users, {
+      onDelete: 'cascade',
       foreignKey: {
         allowNull: false
       }
     });
   };
-    return inventory;
+  return inventory;
 };
 
 //   -- inventory table

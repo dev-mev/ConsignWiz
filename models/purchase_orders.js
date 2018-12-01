@@ -5,5 +5,9 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     timestamps: false
   });
+  // ERE20181129 - add association
+  purchase_orders.associate = function(models) {
+    models.purchase_orders.hasMany(models.inventory);
+  };
   return purchase_orders;
 };
