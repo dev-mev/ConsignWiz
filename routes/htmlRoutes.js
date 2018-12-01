@@ -2,8 +2,6 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Load index page
-  
-  //GET METHOD
   app.get("/", function(req, res) {
     // db.Example.findAll({}).then(function(dbExamples) {
     //   res.render("index", {
@@ -23,11 +21,8 @@ module.exports = function(app) {
         example: data
       });
     });
-     console.log(req);
-
-     //dont we need to have an HTML page for this to occur? 
-     //res.sendFile(path.join(__dirname, "../public/login.html"));
-
+    console.log(req);
+    //res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
   // Render 404 page for any unmatched routes
