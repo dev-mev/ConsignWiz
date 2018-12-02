@@ -23,7 +23,8 @@ module.exports = function (sequelize, DataTypes) {
     sold_date: {
       type: DataTypes.DATE
     },
-    commision_rate: {
+    // ERE20181220 - fix typo
+    commission_rate: {
       type: DataTypes.FLOAT,
       notNull: true
     },
