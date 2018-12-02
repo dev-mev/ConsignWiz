@@ -1,10 +1,10 @@
-// Get references to page elements
-//"make a sale"
+//"make a sale input fields"
 var $makeSaleItemName = $("makeSaleItemName");
 var $makeSaleItemNameDescription = $("makeSaleItemNameDescription");
 var $makeSaleItemNameRequestedPrice = $("makeSaleItemNameRequestedPrice");
-//"add consignor""
-var 
+
+//"add consignor input fields""
+
 
 // var $exampleText = $("#example-text");
 // var $exampleDescription = $("#example-description");
