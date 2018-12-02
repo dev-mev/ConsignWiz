@@ -52,14 +52,14 @@ module.exports = function(app) {
     done(null, user);
   });
 
-  function verifyUserType(req, res, next) {
-    if (req.user.type === "consignor") {
-      console.log("accessing consignor view");
-      next();
-    } else {
-      console.log("accessing employee view");
-      next();
-    }
+  function verifyUserType(requiredType) {
+    return function(req, res, next) {
+      if (req.user.type === requiredType) {
+        next();
+      } else {
+        res.sendStatus(401);
+      }
+    };
   }
 
   app.post(
@@ -78,23 +78,27 @@ module.exports = function(app) {
 
   function isUserAuthenticated(req, res, next) {
     if (req.user) {
-      console.log("auth succeeded");
       next();
     } else {
-      console.log("login please");
-      res.send("You must login!");
+      res.sendStatus(401);
     }
   }
 
   // Get all inventory with Users
-  // app.get("/api/inventory_users", function(req, res) {
-  //   db.inventory.findAll({ include: [db.users] }).then(function(dbInvPlusUser) {
-  //     res.json(dbInvPlusUser);
-  //   });
-  // });
+  app.get(
+    "/api/inventory_users",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      db.inventory
+        .findAll({ include: [db.users] })
+        .then(function(dbInvPlusUser) {
+          res.json(dbInvPlusUser);
+        });
+    }
+  );
 
   // get all inventory for one consignor
-  app.get("/api/inventory", [isUserAuthenticated, verifyUserType], function(
+  app.get("/api/inventory", [isUserAuthenticated, verifyUserType("consignor")], function(
     req,
     res
   ) {
