@@ -18,19 +18,25 @@ module.exports = function(app) {
 
   passport.use(
     new LocalStrategy(function(username, passwordEntered, done) {
-      db.users.findOne({
-        where: {
-          username: username
-        }
-      }).then(function (userData) {
-          bcrypt.compare(passwordEntered, userData.get("passwordHashSalt"), function (_, isMatch) {
-            if (isMatch) {
-              return done(null, userData.get("username"));
-            } else {
-              return done(null, false);
+      db.users
+        .findOne({
+          where: {
+            username: username
+          }
+        })
+        .then(function(userData) {
+          bcrypt.compare(
+            passwordEntered,
+            userData.get("passwordHashSalt"),
+            function(_, isMatch) {
+              if (isMatch) {
+                return done(null, userData.get("username"));
+              } else {
+                return done(null, false);
+              }
             }
-          });
-      })
+          );
+        });
     })
   );
 
