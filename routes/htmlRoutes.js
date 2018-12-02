@@ -2,6 +2,8 @@ var session = require("express-session");
 var express = require("express");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
+var bcrypt = require("bcrypt");
+var db = require("../models");
 
 module.exports = function(app) {
   // Middleware
@@ -15,12 +17,26 @@ module.exports = function(app) {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy(function(username, password, done) {
-      // TODO: check auth against database
-      if (username === "jdoe@example.com" && password === "open-sesame") {
-        return done(null, username);
-      }
-      return done(null, false);
+    new LocalStrategy(function(username, passwordEntered, done) {
+      db.users
+        .findOne({
+          where: {
+            username: username
+          }
+        })
+        .then(function(userData) {
+          bcrypt.compare(
+            passwordEntered,
+            userData.get("passwordHashSalt"),
+            function(_, isMatch) {
+              if (isMatch) {
+                return done(null, userData.get("username"));
+              } else {
+                return done(null, false);
+              }
+            }
+          );
+        });
     })
   );
 
@@ -37,7 +53,6 @@ module.exports = function(app) {
     passport.authenticate("local", { failureRedirect: "/login.html" }),
     function(req, res) {
       res.redirect("/index.html");
-      //res.sendFile(path.join(__dirname, "../public/index.html"));
     }
   );
 
@@ -57,11 +72,11 @@ module.exports = function(app) {
     console.log("secret route accessed by " + req.user);
   });
 
-  //logout route not working in this file, it still lives in server.js for the time being.
-  // app.get("/logout", (req, res) => {
-  //     req.logout();
-  //     res.redirect("/login.html");
-  // });
+  //Logout route
+  app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/login.html");
+  });
 
   app.get("*", function(req, res) {
     res.render("404");

@@ -1,10 +1,9 @@
-//"make a sale input fields"
-var $makeSaleItemName = $("makeSaleItemName");
-var $makeSaleItemNameDescription = $("makeSaleItemNameDescription");
-var $makeSaleItemNameRequestedPrice = $("makeSaleItemNameRequestedPrice");
+//"make a sale input fields" - commented out to make linter happy
+// var $makeSaleItemName = $("makeSaleItemName");
+// var $makeSaleItemNameDescription = $("makeSaleItemNameDescription");
+// var $makeSaleItemNameRequestedPrice = $("makeSaleItemNameRequestedPrice");
 
 //"add consignor input fields""
-
 
 // var $exampleText = $("#example-text");
 // var $exampleDescription = $("#example-description");
