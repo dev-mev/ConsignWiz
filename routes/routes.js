@@ -98,16 +98,17 @@ module.exports = function(app) {
   );
 
   // get all inventory for one consignor
-  app.get("/api/inventory", [isUserAuthenticated, verifyUserType("consignor")], function(
-    req,
-    res
-  ) {
-    db.inventory
-      .findAll({ where: { userId: req.user.id } })
-      .then(function(dbInventory) {
-        res.json(dbInventory);
-      });
-  });
+  app.get(
+    "/api/inventory",
+    [isUserAuthenticated, verifyUserType("consignor")],
+    function(req, res) {
+      db.inventory
+        .findAll({ where: { userId: req.user.id } })
+        .then(function(dbInventory) {
+          res.json(dbInventory);
+        });
+    }
+  );
 
   // TODO: for testing purposes
   app.get("/secret", isUserAuthenticated, function(req, res) {
