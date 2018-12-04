@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/styles.css">
@@ -52,11 +55,7 @@
                 <!--$makeSaleItemName-->
                 <input class="form-control" id="makeSaleItemName" type="text" placeholder="eg: David Bowie shirt">              
               </div>
-              <!--$makeSaleItemNameDescription-->
-              <div class="form-group">
-                <label for="makeSaleItemNameDescription">Item description</label>
-                <input class="form-control" type="text" id="makeSaleItemNameDescription" placeholder="eg: Black short sleeve shirt with David Bowie on it.">
-              </div>
+              
               <!--$makeSaleItemNameRequestedPrice-->
               <label for="makeSaleItemNameRequestedPrice">Requested sales price</label>
               <div class="input-group mb-3">
@@ -122,17 +121,65 @@
           </div>
           <div class="rightSide consignmentStatus" style="display:none" data-bind="visible: ModalStatus() == 'consignment-status'">
             <h3>View consignment status</h3>
-            <form>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Consignor name</label>
-                <input class="form-control" type="text" placeholder="eg: Ed">
-              </div>
-              <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+            <div id="consignment-list"></div>
+
           </div> 
         </div>
       </div>
     </div>
+
+    <script>
+
+    $( document ).ready(function() {
+
+      //View consignment status function
+      function runInventoryQuery(currentUser) {
+      $.ajax({ url: "/api/inventory_users", method: "GET" })
+        .then(function(inventory) { //inventory might be named something else
+
+          //------ need to do some kind of join, because this will show *everything* in the inventory list
+          //-------not just the particular user's. 
+          // ------therefore need to pass in which user into our function. 
+
+
+
+
+          // Log the invetory to console, will print as an obejct
+          console.log("------------------------------------");
+          console.log(inventory);
+          console.log("------------------------------------");
+
+          // Loop through and display each of the inventory items
+          for (var i = 0; i < inventory.length; i++) {
+            var consignmentList = $("#consignment-list");
+            var listItem = $("<li class='list-group-item mt-4'>");
+            var itemStatus= "";
+            if (inventory[i].sold_date === NULL){
+              //then item has not sold
+              itemStatus = "Sold";
+            } else {
+              itemStatus = "Not sold yet"
+            }
+
+            listItem.append(
+              $("<div>").text("Id: " + inventory[i].id),
+              $("<div>").text("Id: " + itemStatus),
+              $("<div>").text("Item name: " + inventory[i].product_name),
+              $("<div>").text("Description: " + inventory[i].description),
+              $("<div>").text("Date received: " + inventory[i].received_date),
+              $("<div>").text("Requested sales price: " + inventory[i].requested_sale_price),
+              $("<div>").text("Sold at price: " + inventory[i].requested_sale_price),
+            );
+
+            consignmentList.append(listItem);
+          }
+        });
+      }
+      runInventoryQuery();
+
+    });
+
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
