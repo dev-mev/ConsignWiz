@@ -120,7 +120,12 @@
           
           </div>
           <div class="rightSide consignmentStatus" style="display:none" data-bind="visible: ModalStatus() == 'consignment-status'">
-            <h3>View consignment status</h3>
+            <div class="">
+              <h3>View consignment status</h3>
+              <div id="amountOwed"></div>
+            </div>
+            
+            
             <div id="consignment-list"></div>
 
           </div> 
@@ -130,58 +135,6 @@
 
     <script>
 
-    $( document ).ready(function() {
-
-      //View consignment status function
-      function runInventoryQuery(currentUser) {
-      $.ajax({ url: "/api/inventory", method: "GET" })
-        .then(function(inventory) { //inventory might be named something else
-
-          // Loop through and display each of the inventory items
-          for (var i = 0; i < inventory.length; i++) {
-            var consignmentList = $("#consignment-list");
-            var listItem = $("<li class='list-group-item mt-4'>");
-            var itemStatus= "";
-
-            if (inventory[i].sold_date === undefined){
-              console.log("inventory sold date is null");
-              //then item has not sold
-              itemStatus = "Sold";
-              
-            } else {
-              console.log("inventory sold date is NOT null");
-              itemStatus = "Not sold yet";
-              inventory[i].sold_at_price = "TBD"
-            }
-
-            listItem.append(
-              $("<span class='bold'>").text("Id: "),
-              $("<span class='db'>").text(inventory[i].id),
-              $("<br>"),
-              $("<span class='bold'>").text("Sold?: "),
-              $("<span class='db'>").text(itemStatus),
-              $("<br>"),
-              $("<span class='bold'>").text("Item name: "),
-              $("<span class='db'>").text(inventory[i].product_name),
-              $("<br>"),
-              $("<span class='bold'>").text("Description: "),
-              $("<span class='db'>").text(inventory[i].description),
-              $("<br>"),
-              $("<span class='bold'>").text("Date received: "),
-              $("<span class='db'>").text(inventory[i].requested_sale_price),
-              $("<br>"),
-              $("<span class='bold'>").text("Sold at price: "),
-              $("<span class='db'>").text(inventory[i].sold_at_price),
-              //  $('.one').wrapAll( "<div class='jackie' />")
-            );
-
-            consignmentList.append(listItem);
-          }
-        });
-      }
-      runInventoryQuery();
-
-    });
 
     </script>
 
