@@ -118,6 +118,31 @@ module.exports = function(app) {
     );
   });
 
+  // Post for adding inventory
+  app.post(
+    "/api/inventory",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      // eslint-disable-next-line camelcase
+      db.inventory.create(req.body).then(function(newItem) {
+        res.json(newItem);
+      });
+    }
+  );
+
+  // //TODO: users route - not working, will come back to.
+  // app.get(
+  //   "/api/users",
+  //   [isUserAuthenticated, verifyUserType("consignor")],
+  //   function(req, res) {
+  //     db.users
+  //       .findAll({ where: { userId: req.user.id } })
+  //       .then(function(users) {
+  //         res.json(users);
+  //       });
+  //   }
+  // );
+
   app.get("*", function(req, res) {
     res.render("404");
   });

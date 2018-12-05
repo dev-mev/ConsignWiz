@@ -41,6 +41,7 @@
         <div class="col-md-3"> <!--Do the function thing here-->
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('sale')}" class="btn btn-primary btn-block btn-lg employee">Make a Sale</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('add-consignor')}" class="btn btn-secondary btn-block btn-lg employee">Add a Consignor</button>
+            <button type="button" data-bind="click: function(){onclickToggleMakeSale('add-inventory')}" class="btn btn-warning btn-block btn-lg employee">Add Inventory</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('inventory-lookup')}" class="btn btn-success btn-block btn-lg employee">Inventory Lookup</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('consignor-lookup')}" class="btn btn-danger btn-block btn-lg employee">Consignor Lookup</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('reports')}" class="btn btn-info btn-block btn-lg employee">View Reports</button>
@@ -75,6 +76,39 @@
                 <label for="exampleInputEmail1">Consignor name</label>
                 <input class="form-control" type="text" placeholder="eg: David Bowie shirt">              
               </div>
+            </form>
+          </div>
+          <div class="rightSide addInventory" style="display:none" data-bind="visible: ModalStatus() == 'add-inventory'">
+            <h3>Add Inventory</h3>
+            <div id="itemAddedAlert" class="alert alert-success collapse" role="alert">
+              Item added!
+            </div>
+            <form id="add-inventory-form" class="form" action="/api/inventory" method="post">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Consignor ID: </label>
+                <input id="userId" name="userId" class="form-control" type="text">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Product name: </label>
+                <input id="productName" name="product_name" class="form-control" type="text" placeholder="Gucci sweater">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Description: </label>
+                <input id="description" name="description" class="form-control" type="text" placeholder="men's">     
+              </div>
+              <div class="form-group"> <!--TODO: make this auto generate-->
+                <label for="exampleInputEmail1">Date Received: </label>
+                <input id="dateReceived" name="received_date" class="form-control" type="text" placeholder="12/01/2018">     
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Price: </label>
+                <input id="price" name="requested_sale_price" class="form-control" type="text" placeholder="$120">     
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Consignor percent:</label>
+                <input id="consignorPercent" name="commission_rate" class="form-control" type="text" placeholder="40%">     
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
           <div class="rightSide inventoryLookup" style="display:none" data-bind="visible: ModalStatus() == 'inventory-lookup'">
