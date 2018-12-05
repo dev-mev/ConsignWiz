@@ -66,20 +66,13 @@ $(document).ready(function() {
   }
   runInventoryQuery();
 
-  //View consignment status function - TODO: make this work
-  // function discoverUserType(currentUser) {
-  //   $.ajax({ url: "/api/users", method: "GET" }).then(function(users) {
-  //     console.log("Begin loop");
-  //     for (var i = 0; i < users.length; i++){
-  //       //console.log(users[i].userType);
-  //       if (users[i].userType === "consignor") {
-  //         //hide all but view consignment button
-  //       } else {
-  //         //show all but consignment button
-  //       }
-  //     }
-  //   });
-  // }
+  // show/hide buttons based on userType
+  $.ajax({
+    url: "/api/users/me",
+    method: "GET"
+  }).then(function(user) {
+    $("." + user.type).show();
+  });
 
   //post inventory
   $("#add-inventory-form").on("submit", function(event) {
