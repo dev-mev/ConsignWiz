@@ -1,8 +1,8 @@
-console.log("KO initiated");
+//console.log("KO initiated");
 
 function Studio() {
   this.ModalStatus = ko.observable("sale");
-
+  this.MakeASale = ko.observable(true);
 
   //this.OneVariable = ko.observable("MakeASale");
 
@@ -16,12 +16,11 @@ function Studio() {
     }
     return;
   };
+  return;
 }
 
 
-
 $( document ).ready(function() {
-
   //View consignment status function
   function runInventoryQuery(currentUser) {
   $.ajax({ url: "/api/inventory", method: "GET" })
@@ -37,12 +36,12 @@ $( document ).ready(function() {
           var itemStatus= "";
 
           if (inventory[i].sold_date){
-            console.log("inventory sold date is null");
+            //console.log("inventory sold date is null");
             //then item has not sold
             itemStatus = "Sold";
             
           } else {
-            console.log("inventory sold date is NOT null");
+            //console.log("inventory sold date is NOT null");
             itemStatus = "Not sold";
             inventory[i].sold_at_price = "TBD"
           }
@@ -76,27 +75,53 @@ $( document ).ready(function() {
   function discoverUserType(currentUser) {
   $.ajax({ url: "/api/users", method: "GET" })
     .then(function(users) { 
-      console.log("Begin loop");
        for (var i = 0; i < users.length; i++){
-         //console.log(users[i].userType);
          if (users[i].userType === "consignor") {
-           //hide all but view consignment button
-           
+            $(".employee").addClass("hide");
+            console.log("CONSIGNOR");
+            //ModalStatus change to "view consignment"
+         }
+         else if (users[i].userType === "employee") {
+           console.log("EMPLOYEE");
+           $(".consignor").addClass("hide");
          }
          else {
-           //show all but consignment button
+           console.log("Cannot get userType");
          }
        }
     });
   }
-
   discoverUserType();
-  
-
 });
 
 
+$(".submit").on("click", function(event) {
+  event.preventDefault();
 
+  // Here we grab the form elements
+  var searchuser = {
+    firstName: $("#firstName").val().trim(),
+  };
 
+  console.log(searchuser);
+
+  $.post("/api/inventory_users", searchuser,
+    function(data) {
+      console.log("data: ", data);
+
+      // If a table is available... tell user they are booked.
+      if (data) {
+        alert("We have inventory!");
+      }
+
+      // If a table is available... tell user they on the waiting list.
+      else {
+        alert("Sorry we dont have inventory for this user");
+      }
+
+      // Clear the form when submitting
+      $("#firstName").val("");
+    });
+});
 
 ko.applyBindings(new Studio());
