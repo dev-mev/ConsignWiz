@@ -95,33 +95,47 @@ $( document ).ready(function() {
 });
 
 
+//consignor lookup submit
 $(".submit").on("click", function(event) {
   event.preventDefault();
 
-  // Here we grab the form elements
   var searchuser = {
     firstName: $("#firstName").val().trim(),
   };
 
-  console.log(searchuser);
+  //console.log(searchuser);
+  $.ajax({ url: "/api/inventory_users", method: "GET" })
+    .then(function(data) {
 
-  $.post("/api/inventory_users", searchuser,
-    function(data) {
-      console.log("data: ", data);
+      if (data.length === 0){
+        console.log("No data items");
+      } else {
+        // Loop through and display each of the inventory items
+        for (var i = 0; i < data.length; i++) {
+          var consignorResults = $("#consignor-results");
+          var listItem1 = $("<li class='list-group-item mt-4'>");
 
-      // If a table is available... tell user they are booked.
-      if (data) {
-        alert("We have inventory!");
+          listItem1.append(
+            $("<span class='bold underline'>").text("Item ID "),
+            $("<span class='db underline'>").text(data[i].id),
+            $("<br>"),
+            $("<span class='bold underline'>").text("Item ID "),
+            $("<span class='db underline'>").text(data[i].user.username),
+            $("<br>"),
+            $("<span class='bold'>").text("Item name: "),
+            $("<span class='db'>").text(data[i].product_name),
+            $("<br>"),
+            $("<span class='bold'>").text("Description: "),
+            $("<span class='db'>").text(data[i].description),
+            $("<br>")
+            //stretch goal - momentjs for date item received column
+          );
+
+          consignmentList.append(listItem1);
+        }
       }
-
-      // If a table is available... tell user they on the waiting list.
-      else {
-        alert("Sorry we dont have inventory for this user");
-      }
-
-      // Clear the form when submitting
-      $("#firstName").val("");
     });
+
 });
 
 ko.applyBindings(new Studio());
