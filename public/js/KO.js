@@ -81,6 +81,14 @@ $(document).ready(function() {
   //   });
   // }
 
+  // show/hide buttons based on userType
+  $.ajax({
+    url: "/api/users/me",
+    method: "GET"
+  }).then(function(user){
+    $("." + user.type).show();
+  });
+
   //post inventory
   $("#add-inventory-form").on("submit", function(event) {
     event.preventDefault();
