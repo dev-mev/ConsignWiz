@@ -20,7 +20,12 @@ function Studio() {
 }
 
 
+
 $( document ).ready(function() {
+  window.myStudio = new Studio();
+  ko.applyBindings(window.myStudio);
+
+
   //View consignment status function
   function runInventoryQuery(currentUser) {
   $.ajax({ url: "/api/inventory", method: "GET" })
@@ -69,7 +74,6 @@ $( document ).ready(function() {
       }
     });
   }
-  runInventoryQuery();
 
   //View consignment status function
   function discoverUserType(currentUser) {
@@ -80,6 +84,9 @@ $( document ).ready(function() {
             $(".employee").addClass("hide");
             console.log("CONSIGNOR");
             //ModalStatus change to "view consignment"
+            console.log(window.myStudio.ModalStatus());
+            window.myStudio.ModalStatus("consignment-status");
+  
          }
          else if (users[i].userType === "employee") {
            console.log("EMPLOYEE");
@@ -91,51 +98,55 @@ $( document ).ready(function() {
        }
     });
   }
-  discoverUserType();
-});
 
+  //consignor lookup submit
+  $(".submit").on("click", function(event) {
+    event.preventDefault();
 
-//consignor lookup submit
-$(".submit").on("click", function(event) {
-  event.preventDefault();
+    var searchuser = {
+      firstName: $("#firstName").val().trim(),
+    };
 
-  var searchuser = {
-    firstName: $("#firstName").val().trim(),
-  };
+    //console.log(searchuser);
+    $.ajax({ url: "/api/inventory_users", method: "GET" })
+      .then(function(data) {
 
-  //console.log(searchuser);
-  $.ajax({ url: "/api/inventory_users", method: "GET" })
-    .then(function(data) {
+        if (data.length === 0){
+          console.log("No data items");
+        } else {
+          // Loop through and display each of the inventory items
+          for (var i = 0; i < data.length; i++) {
+            var consignorResults = $("#consignor-results");
+            var listItem1 = $("<li class='list-group-item mt-4'>");
 
-      if (data.length === 0){
-        console.log("No data items");
-      } else {
-        // Loop through and display each of the inventory items
-        for (var i = 0; i < data.length; i++) {
-          var consignorResults = $("#consignor-results");
-          var listItem1 = $("<li class='list-group-item mt-4'>");
+            listItem1.append(
+              $("<span class='bold underline'>").text("Item ID "),
+              $("<span class='db underline'>").text(data[i].id),
+              $("<br>"),
+              $("<span class='bold underline'>").text("Item ID "),
+              $("<span class='db underline'>").text(data[i].user.username),
+              $("<br>"),
+              $("<span class='bold'>").text("Item name: "),
+              $("<span class='db'>").text(data[i].product_name),
+              $("<br>"),
+              $("<span class='bold'>").text("Description: "),
+              $("<span class='db'>").text(data[i].description),
+              $("<br>")
+              //stretch goal - momentjs for date item received column
+            );
 
-          listItem1.append(
-            $("<span class='bold underline'>").text("Item ID "),
-            $("<span class='db underline'>").text(data[i].id),
-            $("<br>"),
-            $("<span class='bold underline'>").text("Item ID "),
-            $("<span class='db underline'>").text(data[i].user.username),
-            $("<br>"),
-            $("<span class='bold'>").text("Item name: "),
-            $("<span class='db'>").text(data[i].product_name),
-            $("<br>"),
-            $("<span class='bold'>").text("Description: "),
-            $("<span class='db'>").text(data[i].description),
-            $("<br>")
-            //stretch goal - momentjs for date item received column
-          );
-
-          consignmentList.append(listItem1);
+            consignmentList.append(listItem1);
+          }
         }
-      }
-    });
+      });
+
+  });
+
+  runInventoryQuery();
+  discoverUserType();
 
 });
 
-ko.applyBindings(new Studio());
+
+
+// ko.applyBindings(new Studio());
