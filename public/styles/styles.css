@@ -26,9 +26,14 @@
   border: 3px solid #343a40;
 }
 
+.addInventory{
+  border: 3px solid #ffc107;
+}
+
 .rightSide{
   height:100%;
   padding:10px;
+  min-height: 400px;
 }
 
 .row{
@@ -40,6 +45,11 @@
   font-weight:600;
 }
 
-.hide{
+/* .employee, .consignor{
+  display: none;
+} */
+
+.hide {
   display:none;
 }
+

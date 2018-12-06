@@ -110,36 +110,24 @@ module.exports = function(app) {
     }
   );
 
-  // TODO: for testing purposes
-  app.get("/secret", isUserAuthenticated, function(req, res) {
-    res.send("Page to test authentication.");
-    console.log(
-      "secret route accessed by " + req.user.username + " " + req.user.type
-    );
+  // Post for adding inventory
+  app.post(
+    "/api/inventory",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      // eslint-disable-next-line camelcase
+      db.inventory.create(req.body).then(function(newItem) {
+        res.json(newItem);
+      });
+    }
+  );
+
+  // route to get info about logged in user
+  app.get("/api/users/me", isUserAuthenticated, function(req, res) {
+    res.json(req.user);
   });
 
   app.get("*", function(req, res) {
     res.render("404");
   });
-
-  // // Get all examples
-  // app.get("/api/examples", function(req, res) {
-  //   db.Example.findAll({}).then(function(dbExamples) {
-  //     res.json(dbExamples);
-  //   });
-  // });
-
-  // Create a new example
-  // app.post("/api/examples", function(req, res) {
-  //   db.Example.create(req.body).then(function(dbExample) {
-  //     res.json(dbExample);
-  //   });
-  // });
-
-  // Delete an example by id
-  // app.delete("/api/examples/:id", function(req, res) {
-  //   db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-  //     res.json(dbExample);
-  //   });
-  // });
 };
