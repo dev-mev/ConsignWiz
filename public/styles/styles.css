@@ -33,6 +33,7 @@
 .rightSide{
   height:100%;
   padding:10px;
+  min-height: 400px;
 }
 
 .row{
@@ -47,3 +48,8 @@
 .employee, .consignor{
   display: none;
 }
+
+.hide {
+  display:none;
+}
+

@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="img/c.ico" type="image/x-icon" />
 
     <!--jquery-->
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -44,7 +45,7 @@
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('add-inventory')}" class="btn btn-warning btn-block btn-lg employee">Add Inventory</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('inventory-lookup')}" class="btn btn-success btn-block btn-lg employee">Inventory Lookup</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('consignor-lookup')}" class="btn btn-danger btn-block btn-lg employee">Consignor Lookup</button>
-            <button type="button" data-bind="click: function(){onclickToggleMakeSale('reports')}" class="btn btn-info btn-block btn-lg employee">View Reports</button>
+            <button type="button" data-bind="click: function(){onclickToggleMakeSale('reports')}"  id="employee" class="btn btn-info btn-block btn-lg employee">View Reports</button>
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('consignment-status')}" class="btn btn-dark btn-block btn-lg consignor">View Consignment Status</button>
         </div>
         <div class="col-md-8">
@@ -126,10 +127,11 @@
               <form>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Search consignor: </label>
-                  <input class="form-control" type="text" placeholder="eg: Molly">     
+                  <input class="form-control" id="firstName" type="text" placeholder="First name">     
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary submit">Search</button>
               </form>
+              <div id="consignor-results"></div>
           </div>
           <div class="rightSide reports" style="display:none" data-bind="visible: ModalStatus() == 'reports'">
               <h3>View reports</h3>
@@ -174,9 +176,10 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="/js/KO.js"></script> 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
   </body>

@@ -1,7 +1,8 @@
-console.log("KO initiated");
+//console.log("KO initiated");
 
 function Studio() {
   this.ModalStatus = ko.observable("sale");
+  this.MakeASale = ko.observable(true);
 
   //this.OneVariable = ko.observable("MakeASale");
 
@@ -15,14 +16,17 @@ function Studio() {
     }
     return;
   };
+  return;
 }
 
 $(document).ready(function() {
-  //View consignment status function
+  window.myStudio = new Studio();
+  ko.applyBindings(window.myStudio);
+
   function runInventoryQuery() {
     $.ajax({ url: "/api/inventory", method: "GET" }).then(function(inventory) {
       if (inventory.length === 0) {
-        console.log("No inventory items");
+        // console.log("No inventory items");
       } else {
         // Loop through and display each of the inventory items
         for (var i = 0; i < inventory.length; i++) {
@@ -31,11 +35,11 @@ $(document).ready(function() {
           var itemStatus = "";
 
           if (inventory[i].sold_date) {
-            console.log("inventory sold date is null");
+            //console.log("inventory sold date is null");
             //then item has not sold
             itemStatus = "Sold";
           } else {
-            console.log("inventory sold date is NOT null");
+            //console.log("inventory sold date is NOT null");
             itemStatus = "Not sold";
             // eslint-disable-next-line camelcase
             inventory[i].sold_at_price = "TBD";
@@ -64,7 +68,69 @@ $(document).ready(function() {
       }
     });
   }
-  runInventoryQuery();
+
+  function discoverUserType() {
+    // console.log("begin discoverUserType function");
+    $.ajax({ url: "/api/users", method: "GET" }).then(function(users) {
+      console.log("begin loop in discoverUserType");
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].userType === "consignor") {
+          $(".employee").addClass("hide");
+          window.myStudio.ModalStatus("consignment-status");
+          console.log("Add hide class");
+        } else if (users[i].userType === "employee") {
+          console.log("EMPLOYEE");
+          $(".consignor").addClass("hide");
+        } else {
+          console.log("Cannot get userType");
+        }
+      }
+    });
+  }
+
+  //consignor lookup submit
+  $(".submit").on("click", function(event) {
+    event.preventDefault();
+
+    var searchuser = {
+      firstName: $("#firstName")
+        .val()
+        .trim()
+    };
+
+    $.ajax({ url: "/api/inventory_users", method: "GET" }).then(function(data) {
+      console.log("data: ", data);
+      console.log("searchuser", searchuser.firstName);
+      for (var i = 0; i < data.length; i++) {
+        console.log("begin lookup");
+        console.log(data[i].user);
+
+        if (data[i].user.first_name === searchuser.firstName) {
+          var consignorResults = $("#consignor-results");
+          var listItem1 = $("<li class='list-group-item mt-4'>");
+
+          listItem1.append(
+            $("<span class='bold underline'>").text("Last name: "),
+            $("<span class='db underline'>").text(data[i].user.lastName),
+            $("<br>"),
+            $("<span class='bold underline'>").text("Street address "),
+            $("<span class='db underline'>").text(data[i].user.street_address1),
+            $("<br>"),
+            $("<span class='bold'>").text("city: "),
+            $("<span class='db'>").text(data[i].user.city),
+            $("<br>"),
+            $("<span class='bold'>").text("email: "),
+            $("<span class='db'>").text(data[i].email_address),
+            $("<br>")
+          );
+          consignorResults.append(listItem1);
+        }
+      }
+    });
+  });
+
+  runInventoryQuery(); //view consignment status
+  //discoverUserType(); //handles which user is logged in.
 
   // show/hide buttons based on userType
   $.ajax({
@@ -112,5 +178,3 @@ $(document).ready(function() {
     });
   });
 });
-
-ko.applyBindings(new Studio());
