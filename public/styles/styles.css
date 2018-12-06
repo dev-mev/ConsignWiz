@@ -45,9 +45,9 @@
   font-weight:600;
 }
 
-/* .employee, .consignor{
+.employee, .consignor{
   display: none;
-} */
+}
 
 .hide {
   display:none;

@@ -130,7 +130,7 @@ $(document).ready(function() {
   });
 
   runInventoryQuery(); //view consignment status
-  discoverUserType(); //handles which user is logged in.
+  //discoverUserType(); //handles which user is logged in.
 
   // show/hide buttons based on userType
   $.ajax({
