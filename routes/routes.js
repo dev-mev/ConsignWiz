@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 var db = require("../models");
 var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcrypt");
@@ -119,6 +120,37 @@ module.exports = function(app) {
       db.inventory.create(req.body).then(function(newItem) {
         res.json(newItem);
       });
+    }
+  );
+
+  // TODO: [ERE]  The PUT route for updating inventory
+  app.put(
+    "/api/inventory/:inventoryId",
+    // [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      // eslint-disable-next-line camelcase
+      db.inventory
+        .update(
+          {
+            // eslint-disable-next-line camelcase
+            sold_at_price: req.body.soldAtPrice,
+            sold_date: req.body.soldDate
+          },
+          {
+            where: {
+              id: req.params.inventoryId
+            }
+          }
+        )
+        .then(function(results) {
+          res.json(results);
+          if (results.changedRows === 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+          } else {
+            res.status(200).end();
+          }
+        });
     }
   );
 
