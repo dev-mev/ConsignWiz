@@ -86,7 +86,6 @@ $( document ).ready(function() {
             //ModalStatus change to "view consignment"
             console.log(window.myStudio.ModalStatus());
             window.myStudio.ModalStatus("consignment-status");
-  
          }
          else if (users[i].userType === "employee") {
            console.log("EMPLOYEE");
