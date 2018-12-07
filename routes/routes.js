@@ -158,7 +158,7 @@ module.exports = function(app) {
   // TODO: [ERE]  The PUT route for updating inventory
   app.put(
     "/api/inventory/:inventoryId",
-    // [isUserAuthenticated, verifyUserType("employee")],
+    [isUserAuthenticated, verifyUserType("employee")],
     function(req, res) {
       db.inventory
         .update(
