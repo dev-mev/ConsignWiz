@@ -49,6 +49,7 @@
             <button type="button" data-bind="click: function(){onclickToggleMakeSale('consignment-status')}" class="btn btn-dark btn-block btn-lg consignor">View Consignment Status</button>
         </div>
         <div class="col-md-8">
+          <!--MAKE A SALE-->
           <div class="rightSide sale" style="display:none" data-bind="visible: ModalStatus() == 'sale'">
               <h3>Make a sale</h3>
             <form>
@@ -79,6 +80,7 @@
               </div>
             </form>
           </div>
+          <!--ADD INVENTORY-->
           <div class="rightSide addInventory" style="display:none" data-bind="visible: ModalStatus() == 'add-inventory'">
             <h3>Add Inventory</h3>
             <div id="itemAddedAlert" class="alert alert-success collapse" role="alert">
@@ -112,12 +114,17 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
+          <!--INVENTORY LOOKUP-->
           <div class="rightSide inventoryLookup" style="display:none" data-bind="visible: ModalStatus() == 'inventory-lookup'">
-            <h3>Look up inventory</h3>
+            <h3>Search Inventory</h3>
             <form>
               <div class="form-group">
-                <label for="exampleInputEmail1">Search inventory: </label>
-                <input class="form-control" type="text" placeholder="eg: David Bowie Shirt">     
+                <label for="exampleInputEmail1">Search by item ID: </label>
+                <input class="form-control" type="text">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Search by product name: </label>
+                <input class="form-control" type="text" placeholder="eg: David Bowie Shirt">
               </div>
               <button type="submit" class="btn btn-primary">Search</button>
             </form>
@@ -133,28 +140,29 @@
               </form>
               <div id="consignor-results"></div>
           </div>
+          <!--VIEW REPORTS-->
           <div class="rightSide reports" style="display:none" data-bind="visible: ModalStatus() == 'reports'">
               <h3>View reports</h3>
               <p>What would you like a report on? </p>
               <p>Example reports: sales within this time period, sales by this consignor, sales by this category of clothing?</p>
               <form>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Item description</label>
-                    <input class="form-control" type="text" placeholder="eg: Shirt, Pants, Shoes">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Item description</label>
+                  <input class="form-control" type="text" placeholder="eg: Shirt, Pants, Shoes">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Consignor name</label>
+                  <input class="form-control" type="text" placeholder="eg: Jackie">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Sold on this date (mm/dd/yyyy)</label>
+                    <input class="form-control" type="text" placeholder="eg: 01/01/2018">
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Consignor name</label>
-                    <input class="form-control" type="text" placeholder="eg: Jackie">
-                  </div>
-                  <div class="form-group">
-                      <label for="exampleInputPassword1">Sold on this date (mm/dd/yyyy)</label>
-                      <input class="form-control" type="text" placeholder="eg: 01/01/2018">
-                    </div>
-                  <!--This form should also generate a date upon selecting "submit" -->
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-          
+                <!--This form should also generate a date upon selecting "submit" -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
           </div>
+          <!--VIEW CONSIGNMENT STATUS-->
           <div class="rightSide consignmentStatus" style="display:none" data-bind="visible: ModalStatus() == 'consignment-status'">
             <div class="">
               <h3>View consignment status</h3>

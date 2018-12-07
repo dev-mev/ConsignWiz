@@ -111,6 +111,11 @@ module.exports = function(app) {
     }
   );
 
+  // route to get info about logged in user
+  app.get("/api/users/me", isUserAuthenticated, function(req, res) {
+    res.json(req.user);
+  });
+
   // Post for adding inventory
   app.post(
     "/api/inventory",
@@ -153,11 +158,6 @@ module.exports = function(app) {
         });
     }
   );
-
-  // route to get info about logged in user
-  app.get("/api/users/me", isUserAuthenticated, function(req, res) {
-    res.json(req.user);
-  });
 
   app.get("*", function(req, res) {
     res.render("404");

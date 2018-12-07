@@ -128,8 +128,52 @@ $(document).ready(function() {
     });
   });
 
-  runInventoryQuery(); //view consignment status
-  //discoverUserType(); //handles which user is logged in.
+  // TODO: inventory lookup
+  function runInventoryQuery() {
+    $.ajax({ url: "/api/inventory_users", method: "GET" }).then(function(inventory) {
+      if (inventory.length === 0) {
+        console.log("No inventory items");
+      } else {
+        // Loop through and display each of the inventory items
+        for (var i = 0; i < inventory.length; i++) {
+          var consignmentList = $("#consignment-list");
+          var listItem = $("<li class='list-group-item mt-4'>");
+          var itemStatus = "";
+
+          if (inventory[i].sold_date) {
+            console.log("inventory sold date is null");
+            //then item has not sold
+            itemStatus = "Sold";
+          } else {
+            console.log("inventory sold date is NOT null");
+            itemStatus = "Not sold";
+            // eslint-disable-next-line camelcase
+            inventory[i].sold_at_price = "TBD";
+          }
+
+          listItem.append(
+            $("<span class='bold underline'>").text("Item ID "),
+            $("<span class='db underline'>").text(inventory[i].id),
+            $("<br>"),
+            $("<span class='bold'>").text("Sales status: "),
+            $("<span class='db'>").text(itemStatus),
+            $("<br>"),
+            $("<span class='bold'>").text("Item name: "),
+            $("<span class='db'>").text(inventory[i].product_name),
+            $("<br>"),
+            $("<span class='bold'>").text("Description: "),
+            $("<span class='db'>").text(inventory[i].description),
+            $("<br>"),
+            $("<span class='bold'>").text("Price: $"),
+            $("<span class='db'>").text(inventory[i].requested_sale_price)
+            //stretch goal - momentjs for date item received column
+          );
+
+          consignmentList.append(listItem);
+        }
+      }
+    });
+  }
 
   // show/hide buttons based on userType
   $.ajax({
@@ -174,6 +218,8 @@ $(document).ready(function() {
       setTimeout(function() {
         $("#itemAddedAlert").hide();
       }, 5000);
+
+      runInventoryQuery();
     });
   });
 });
