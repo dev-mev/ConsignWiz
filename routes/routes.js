@@ -100,7 +100,7 @@ module.exports = function(app) {
 
   // get all inventory for one consignor
   app.get(
-    "/api/inventory",
+    "/api/my-items",
     [isUserAuthenticated, verifyUserType("consignor")],
     function(req, res) {
       db.inventory
@@ -110,6 +110,39 @@ module.exports = function(app) {
         });
     }
   );
+
+  // get all inventory - employee view
+  app.get(
+    "/api/inventory/:search",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      db.inventory
+        .findAll({
+          where: {
+            product_name: require("./inventory-wildcard")(req.params.search)
+          }
+        })
+        .then(function(dbInventory) {
+          res.json(dbInventory);
+        });
+    }
+  );
+
+  // users DB for jackie.
+  app.get(
+    "/api/users",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      db.users.findAll().then(function(users) {
+        res.json(users);
+      });
+    }
+  );
+
+  // route to get info about logged in user
+  app.get("/api/users/me", isUserAuthenticated, function(req, res) {
+    res.json(req.user);
+  });
 
   // Post for adding inventory
   app.post(
@@ -153,11 +186,6 @@ module.exports = function(app) {
         });
     }
   );
-
-  // route to get info about logged in user
-  app.get("/api/users/me", isUserAuthenticated, function(req, res) {
-    res.json(req.user);
-  });
 
   app.get("*", function(req, res) {
     res.render("404");
