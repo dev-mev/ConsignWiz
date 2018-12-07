@@ -149,7 +149,6 @@ module.exports = function(app) {
     "/api/inventory",
     [isUserAuthenticated, verifyUserType("employee")],
     function(req, res) {
-      // eslint-disable-next-line camelcase
       db.inventory.create(req.body).then(function(newItem) {
         res.json(newItem);
       });
@@ -161,7 +160,6 @@ module.exports = function(app) {
     "/api/inventory/:inventoryId",
     // [isUserAuthenticated, verifyUserType("employee")],
     function(req, res) {
-      // eslint-disable-next-line camelcase
       db.inventory
         .update(
           {
