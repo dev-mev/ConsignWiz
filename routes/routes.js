@@ -100,7 +100,7 @@ module.exports = function(app) {
 
   // get all inventory for one consignor
   app.get(
-    "/api/inventory",
+    "/api/my-items",
     [isUserAuthenticated, verifyUserType("consignor")],
     function(req, res) {
       db.inventory
@@ -108,6 +108,34 @@ module.exports = function(app) {
         .then(function(dbInventory) {
           res.json(dbInventory);
         });
+    }
+  );
+
+  // get all inventory - employee view
+  app.get(
+    "/api/inventory/:search",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      db.inventory
+        .findAll({
+          where: {
+            product_name: require("./inventory-wildcard")(req.params.search)
+          }
+        })
+        .then(function(dbInventory) {
+          res.json(dbInventory);
+        });
+    }
+  );
+
+  // users DB for jackie.
+  app.get(
+    "/api/users",
+    [isUserAuthenticated, verifyUserType("employee")],
+    function(req, res) {
+      db.users.findAll().then(function(users) {
+        res.json(users);
+      });
     }
   );
 
