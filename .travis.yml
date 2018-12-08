@@ -4,8 +4,6 @@ branches:
   only:
   - master
   - Development
-env:
-  - secret="consign"
 cache:
   directories:
     - node_modules
