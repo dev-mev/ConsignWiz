@@ -149,7 +149,6 @@ module.exports = function(app) {
     "/api/inventory",
     [isUserAuthenticated, verifyUserType("employee")],
     function(req, res) {
-      // eslint-disable-next-line camelcase
       db.inventory.create(req.body).then(function(newItem) {
         res.json(newItem);
       });
@@ -159,9 +158,8 @@ module.exports = function(app) {
   // TODO: [ERE]  The PUT route for updating inventory
   app.put(
     "/api/inventory/:inventoryId",
-    // [isUserAuthenticated, verifyUserType("employee")],
+    [isUserAuthenticated, verifyUserType("employee")],
     function(req, res) {
-      // eslint-disable-next-line camelcase
       db.inventory
         .update(
           {

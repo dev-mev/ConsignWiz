@@ -52,20 +52,26 @@
           <!--MAKE A SALE-->
           <div class="rightSide sale" style="display:none" data-bind="visible: ModalStatus() == 'sale'">
               <h3>Make a sale</h3>
-            <form>
+            <form  id="make-sale">
               <div class="form-group">
-                <label for="makeSaleItemName">Item Name</label>
+                <div id="itemSoldAlert" class="alert alert-success collapse" role="alert">
+                  Item Updated!
+                </div>
+                <label for="makeSaleItemNumber">Item number</label>
                 <!--$makeSaleItemName-->
-                <input class="form-control" id="makeSaleItemName" type="text" placeholder="eg: David Bowie shirt">              
-              </div>
-              
-              <!--$makeSaleItemNameRequestedPrice-->
-              <label for="makeSaleItemNameRequestedPrice">Requested sales price</label>
+                <input class="form-control" id="makeSaleId" type="text" placeholder="eg: 4">              
+              </div>  
+              <!--$makeSaleItemNameSoldAtPrice-->
+              <label for="makeSaleSoldAtPrice">Sale price</label>
               <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" id="makeSaleSoldAtPrice" placeholder="eg: 5.00" aria-label="Amount (to the nearest dollar)">
               </div>
-                <input type="text" class="form-control" id="makeSaleItemNameRequestedPrice" placeholder="eg: 5.00" aria-label="Amount (to the nearest dollar)">
+              <div class="form-group"> 
+                <label for="makeSaleItemSoldDate">Date Sold: </label>
+                <input id="makeSaleItemSoldDate" name="sold_date" class="form-control" type="text" placeholder="12/01/2018">     
               </div>
               <!--This form should also generate a date upon selecting "submit" -->
               <button type="submit" class="btn btn-primary">Submit</button>

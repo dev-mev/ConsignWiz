@@ -189,6 +189,44 @@ $(document).ready(function() {
     $("." + user.type).show();
   });
 
+  // Make a sale submit // ERE20181207 - This is a PUT Action
+  $("#make-sale").on("submit", function(event) {
+    event.preventDefault();
+    console.log("make a sale submit <=======+++++++=======<");
+    var intSoldAtPrice = $("#makeSaleSoldAtPrice")
+      .val()
+      .trim();
+    var soldDate = $("#makeSaleItemSoldDate")
+      .val()
+      .trim();
+    var intInventoryId = $("#makeSaleId")
+      .val()
+      .trim();
+    if (intSoldAtPrice && soldDate && intInventoryId) {
+      var updateItem = {
+        // eslint-disable-next-line camelcase
+        soldAtPrice: intSoldAtPrice,
+        // eslint-disable-next-line camelcase
+        soldDate: soldDate
+      };
+      console.log("updateItem", updateItem);
+      $.ajax("/api/inventory/" + intInventoryId, {
+        type: "PUT",
+        data: updateItem
+      }).then(function() {
+        console.log("changed Sold at Price to", updateItem.soldAtPrice);
+        // Reload the page to get the updated list
+        $("#make-sale").trigger("reset");
+        $("#itemSoldAlert").show();
+        setTimeout(function() {
+          $("#itemSoldAlert").hide();
+        }, 5000);
+      });
+    } else {
+      console.log("empty values in input fields");
+    }
+  });
+
   // post inventory
   $("#add-inventory-form").on("submit", function(event) {
     event.preventDefault();
