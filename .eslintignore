@@ -1,2 +1,4 @@
-models/index.js
+models/
+db/
 node_modules
+inventory-wildcard.js

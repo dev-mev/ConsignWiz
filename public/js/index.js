@@ -1,8 +1,14 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+//"make a sale input fields" - commented out to make linter happy
+// var $makeSaleItemName = $("makeSaleItemName");
+// var $makeSaleItemNameDescription = $("makeSaleItemNameDescription");
+// var $makeSaleItemNameRequestedPrice = $("makeSaleItemNameRequestedPrice");
+
+//"add consignor input fields""
+
+// var $exampleText = $("#example-text");
+// var $exampleDescription = $("#example-description");
+// var $submitBtn = $("#submit");
+// var $exampleList = $("#example-list");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
