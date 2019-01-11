@@ -1,2 +1,2 @@
-# project2-bootcamp
-Bootcamp project2
+# ConsignWiz
+Web-based consignment store software
