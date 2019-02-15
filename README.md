@@ -3,7 +3,7 @@ Team project: Web-based consignment store software written in Javascript using N
 
 My roles: user authentication (Passport.js), password hashing and salting (Bcrypt), custom authorization, assisted with front end (Knockout) and API routes.
 
-Deployed on Heroku: https://frozen-harbor-19467.herokuapp.com/login.html
+Deployed on Heroku: https://damp-meadow-51211.herokuapp.com/login.html
 
 ConsignWiz Sample Login Accounts:
 
